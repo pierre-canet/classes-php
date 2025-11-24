@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $registerResult = $userObj->register($_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname']);
     } else {
         // Connect
-        $userObj->connect((string)$_POST['login'], (string)$_POST['password']);
+        $userObj->connect((string)$_POST['oldLogin'], (string)$_POST['password']);
     }
 
     // Update
-    if (isset($_POST['update'], $_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname'])) {
-        $updateResult = $userObj->update($_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname']);
+    if (isset($_POST['update'], $_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['id'])) {
+        $updateResult = $userObj->update($_POST['login'], $_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['id']);
     }
 
     // Delete
@@ -65,6 +65,7 @@ $userInfos = $userObj->getAllInfos();
     <?php foreach ($users as $u) : ?>
         <form method="post" action="" style="display: inline-block;">
             <input type="hidden" name="id" value="<?= $u['id'] ?>">
+            <input type="hidden" name="oldLogin" value="<?= $u['login'] ?>">
             <input type="text" name="login" value="<?= $u['login'] ?>" required>
             <input type="text" name="email" value="<?= $u['email'] ?>" required>
             <input type="text" name="firstname" value="<?= $u['firstname'] ?>" required>
